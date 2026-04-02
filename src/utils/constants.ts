@@ -1,11 +1,11 @@
 import type { NavItem, Feature, Step, Stat, PricingPlan, Integration, Testimonial, FAQ } from '../types'
 
-export const NAV_ITEMS: NavItem[] = [
-  { label: 'Features', href: '#features' },
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Dashboard', href: '#dashboard' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'Integrations', href: '#integrations' },
+export const NAV_ITEMS = [
+  { label: 'Home', href: '/', sectionId: 'home' },
+  { label: 'Features', href: '/features', sectionId: 'features' },
+  { label: 'How It Works', href: '/how-it-works', sectionId: 'how-it-works' },
+  { label: 'Integrations', href: '/integrations', sectionId: 'integrations' },
+  { label: 'Pricing', href: '/pricing', sectionId: 'pricing' },
 ]
 
 export const STATS: Stat[] = [

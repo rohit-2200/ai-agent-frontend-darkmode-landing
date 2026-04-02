@@ -3,6 +3,7 @@ import { useScrollAnimation } from '../../hooks/useScrollAnimation'
 import { SectionHeading } from '../ui/SectionHeading'
 import { Icon } from '../ui/Icon'
 import { STEPS } from '../../utils/constants'
+import { Link } from 'react-router-dom'
 
 function StepCard({
   step,
@@ -34,10 +35,16 @@ function StepCard({
 
       <div className="pb-14 lg:pb-20">
         <div className="flex items-center gap-3 mb-3">
-          <span className="text-primary-600 dark:text-primary-400 font-mono text-sm font-bold">{step.number}</span>
-          <h3 className="font-display text-xl lg:text-2xl font-semibold text-slate-900 dark:text-white">{step.title}</h3>
+          <span className="text-primary-600 dark:text-primary-400 font-mono text-sm font-bold">
+            {step.number}
+          </span>
+          <h3 className="font-display text-xl lg:text-2xl font-semibold text-slate-900 dark:text-white">
+            {step.title}
+          </h3>
         </div>
-        <p className="text-slate-600 dark:text-dark-400 leading-relaxed max-w-md">{step.description}</p>
+        <p className="text-slate-600 dark:text-dark-400 leading-relaxed max-w-md">
+          {step.description}
+        </p>
       </div>
     </motion.div>
   )
@@ -110,9 +117,14 @@ function ArchitectureDiagram() {
 
         <div className="glass-card p-5 border border-primary-500/20 bg-primary-500/5">
           <div className="text-center mb-4">
-            <span className="text-xs font-bold text-primary-600 dark:text-primary-400 tracking-wider">MCP SERVER</span>
-            <p className="text-[10px] text-slate-600 dark:text-dark-400 mt-1">Model Context Protocol</p>
+            <span className="text-xs font-bold text-primary-600 dark:text-primary-400 tracking-wider">
+              MCP SERVER
+            </span>
+            <p className="text-[10px] text-slate-600 dark:text-dark-400 mt-1">
+              Model Context Protocol
+            </p>
           </div>
+
           <div className="grid grid-cols-4 gap-3">
             {[
               { icon: 'calendar', label: 'Calendar', color: 'blue' },
@@ -135,7 +147,17 @@ function ArchitectureDiagram() {
   )
 }
 
-export function HowItWorks() {
+type HowItWorksProps = {
+  preview?: boolean
+  showViewMore?: boolean
+}
+
+export function HowItWorks({
+  preview = false,
+  showViewMore = false,
+}: HowItWorksProps) {
+  const displayedSteps = preview ? STEPS.slice(0, 3) : STEPS
+
   return (
     <section id="how-it-works" className="relative py-24 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-white dark:bg-dark-950 transition-colors duration-300" />
@@ -149,17 +171,40 @@ export function HowItWorks() {
           description="Our AI agent handles the entire sales conversation flow — from the moment a prospect calls to the final follow-up email."
         />
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          <div>
-            {STEPS.map((step, i) => (
-              <StepCard key={step.title} step={step} index={i} isLast={i === STEPS.length - 1} />
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-start">
+          <div className="max-w-xl mx-auto lg:mx-0">
+            {displayedSteps.map((step, i) => (
+              <StepCard
+                key={step.title}
+                step={step}
+                index={i}
+                isLast={i === displayedSteps.length - 1}
+              />
             ))}
           </div>
 
-          <div className="lg:sticky lg:top-32">
-            <ArchitectureDiagram />
-          </div>
+          {!preview && (
+            <div className="lg:sticky lg:top-28 max-w-md mx-auto">
+              <ArchitectureDiagram />
+            </div>
+          )}
         </div>
+
+        {showViewMore && (
+          <div className="mt-16 text-center">
+            <Link
+              to="/how-it-works"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-500/10 hover:bg-primary-500/20 text-primary-600 dark:text-primary-400 font-medium transition-all duration-200 border border-primary-500/20 hover:border-primary-500/40 group"
+            >
+              Learn more
+              <Icon
+                name="arrow-right"
+                size={16}
+                className="transition-transform duration-200 group-hover:translate-x-1"
+              />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   )

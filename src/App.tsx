@@ -1,33 +1,30 @@
-import { Navbar } from './components/layout/Navbar'
-import { Footer } from './components/layout/Footer'
-import { Hero } from './components/sections/Hero'
-import { Features } from './components/sections/Features'
-import { HowItWorks } from './components/sections/HowItWorks'
-import { Dashboard } from './components/sections/Dashboard'
-import { Testimonials } from './components/sections/Testimonials'
-import { Pricing } from './components/sections/Pricing'
-import { Integrations } from './components/sections/Integrations'
-import { FAQ } from './components/sections/FAQ'
-import { CTA } from './components/sections/CTA'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { Navbar } from "./components/layout/Navbar";
+import { Footer } from "./components/layout/Footer";
+
+import Home from "./pages/Home";
+import Features from "./pages/Features";
+import HowItWorks from "./pages/HowItWorks";
+import Integrations from "./pages/Integrations";
+import Pricing from "./pages/Pricing";
+import Demo from "./pages/Demo";
 
 function App() {
   return (
-    <div className="relative min-h-screen bg-dark-950">
+    <BrowserRouter>
       <Navbar />
-      <main>
-        <Hero />
-        <Features />
-        <HowItWorks />
-        <Dashboard />
-        <Testimonials />
-        <Pricing />
-        <Integrations />
-        <FAQ />
-        <CTA />
-      </main>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/integrations" element={<Integrations />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/demo" element={<Demo />} />
+      </Routes>
       <Footer />
-    </div>
-  )
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

@@ -3,6 +3,7 @@ import { useScrollAnimation } from '../../hooks/useScrollAnimation'
 import { SectionHeading } from '../ui/SectionHeading'
 import { Icon } from '../ui/Icon'
 import { FEATURES } from '../../utils/constants'
+import { Link } from 'react-router-dom'
 
 function FeatureCard({
   feature,
@@ -30,7 +31,10 @@ function FeatureCard({
       <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-300 transition-colors">
         {feature.title}
       </h3>
-      <p className="text-slate-600 dark:text-dark-400 text-sm leading-relaxed">{feature.description}</p>
+
+      <p className="text-slate-600 dark:text-dark-400 text-sm leading-relaxed">
+        {feature.description}
+      </p>
 
       <div className="mt-5 flex items-center gap-2 text-sm text-primary-600 dark:text-primary-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         Learn more
@@ -40,7 +44,17 @@ function FeatureCard({
   )
 }
 
-export function Features() {
+type FeaturesProps = {
+  preview?: boolean
+  showViewMore?: boolean
+}
+
+export function Features({
+  preview = false,
+  showViewMore = false,
+}: FeaturesProps) {
+  const displayedFeatures = preview ? FEATURES.slice(0, 3) : FEATURES
+
   return (
     <section id="features" className="relative py-24 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-slate-100 dark:from-dark-950 dark:via-dark-900/50 dark:to-dark-950" />
@@ -55,10 +69,22 @@ export function Features() {
         />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
-          {FEATURES.map((feature, i) => (
+          {displayedFeatures.map((feature, i) => (
             <FeatureCard key={feature.title} feature={feature} index={i} />
           ))}
         </div>
+
+        {showViewMore && (
+          <div className="mt-10 text-center">
+            <Link
+              to="/features"
+              className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 font-medium hover:underline"
+            >
+              View all features
+              <Icon name="arrow-right" size={16} />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   )
