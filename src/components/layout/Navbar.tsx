@@ -47,8 +47,12 @@ export function Navbar() {
       .filter(Boolean) as HTMLElement[]
 
     const handleSectionScroll = () => {
-      const scrollPosition = window.scrollY + 140
+      if (window.scrollY < 80) {
+        setActiveSection('home')
+        return
+      }
 
+      const scrollPosition = window.scrollY + 140
       let current = 'home'
 
       for (const section of sections) {
@@ -75,21 +79,38 @@ export function Navbar() {
   ) => {
     if (!item.sectionId) return
 
-    if (location.pathname === '/') {
-      e.preventDefault()
-      const target = document.getElementById(item.sectionId)
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    e.preventDefault()
+
+    if (item.sectionId === 'home') {
+      setActiveSection('home')
+
+      if (location.pathname !== '/') {
+        navigate('/')
+
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }, 100)
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
       }
-    } else if (item.sectionId !== 'home') {
-      e.preventDefault()
+
+      return
+    }
+
+    if (location.pathname !== '/') {
       navigate('/')
+
       setTimeout(() => {
         const target = document.getElementById(item.sectionId!)
         if (target) {
           target.scrollIntoView({ behavior: 'smooth', block: 'start' })
         }
       }, 100)
+    } else {
+      const target = document.getElementById(item.sectionId)
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
     }
   }
 
