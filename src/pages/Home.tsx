@@ -1,4 +1,3 @@
-import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
 import { CTA } from '@/components/sections/CTA'
 import { Dashboard } from '@/components/sections/Dashboard'
@@ -9,7 +8,6 @@ import { HowItWorks } from '@/components/sections/HowItWorks'
 import { Integrations } from '@/components/sections/Integrations'
 import { Pricing } from '@/components/sections/Pricing'
 import { Testimonials } from '@/components/sections/Testimonials'
-import {Link} from 'react-router-dom'
 
 
 function Home() {
